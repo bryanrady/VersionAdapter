@@ -200,7 +200,7 @@ public class CompatV10Activity extends AppCompatActivity {
                     Log.d("wangqingbin","mImageUri=="+mImageUri);
                     //    iv.setImageURI(mImageUri);
 
-                    Bitmap bitmap = imageUriToBitmap(mImageUri, "take_photo");
+                    Bitmap bitmap = imageUriToBitmap(mImageUri);
                     iv.setImageBitmap(bitmap);
                     break;
                 case REQUEST_OPEN_ALBUM:
@@ -218,7 +218,7 @@ public class CompatV10Activity extends AppCompatActivity {
 //                        iv.setImageBitmap(bitmap);
 
                         //3.将uri转换成bitmap再进行加载
-//                        Bitmap bitmap = imageUriToBitmap(imageUri, null);
+//                        Bitmap bitmap = imageUriToBitmap(imageUri);
 //                        iv.setImageBitmap(bitmap);
                     }
                     break;
@@ -335,6 +335,7 @@ public class CompatV10Activity extends AppCompatActivity {
                     //将Bitmap转换为输出流
                     bitmap.compress(compressFormat, 100, os);
                     os.close();
+                    bitmap.recycle();
                     Toast.makeText(this, "Add bitmap to album succeeded.", Toast.LENGTH_SHORT).show();
                 }
             }
@@ -460,10 +461,9 @@ public class CompatV10Activity extends AppCompatActivity {
     /**
      * 将uri转换成bitmap
      * @param uri
-     * @param way
      * @return
      */
-    private Bitmap imageUriToBitmap(Uri uri, String way){
+    private Bitmap imageUriToBitmap(Uri uri){
         ParcelFileDescriptor pfd = null;
         try {
             Bitmap bitmap = null;
@@ -474,11 +474,9 @@ public class CompatV10Activity extends AppCompatActivity {
                 bitmap = BitmapFactory.decodeFileDescriptor(fd);
 
                 //2.旋转图片    拍照才旋转
-                if ("take_photo".equals(way)){
-                    if (Build.VERSION.SDK_INT > Build.VERSION_CODES.N){
-                        ExifInterface exifInterface = new ExifInterface(fd);
-                        bitmap = rotateBitmap(exifInterface, bitmap);
-                    }
+                if (Build.VERSION.SDK_INT > Build.VERSION_CODES.N){
+                    ExifInterface exifInterface = new ExifInterface(fd);
+                    bitmap = rotateBitmap(exifInterface, bitmap);
                 }
             }
             return bitmap;
@@ -516,8 +514,8 @@ public class CompatV10Activity extends AppCompatActivity {
             if(degree != 0){
                 Matrix matrix = new Matrix();
                 matrix.postRotate(degree);
-                Bitmap bitmap = Bitmap.createBitmap(originalBitmap, 0, 0, originalBitmap.getWidth(), originalBitmap.getHeight(), matrix,true);
-                return bitmap;
+                Bitmap rotateBitmap = Bitmap.createBitmap(originalBitmap, 0, 0, originalBitmap.getWidth(), originalBitmap.getHeight(), matrix,true);
+                return rotateBitmap;
             }
         }
         return originalBitmap;

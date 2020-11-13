@@ -28,6 +28,8 @@
         <activity android:name=".v10.CompatV10Activity" />
         <activity android:name=".v10.AlbumRecyclerActivity" />
 
+        <activity android:name=".v11.CompatV11Activity" />
+
         <provider
             android:name="androidx.core.content.FileProvider"
             android:authorities="${applicationId}.provider"

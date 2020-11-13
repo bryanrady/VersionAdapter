@@ -12,6 +12,7 @@ import android.view.View;
 import android.widget.Button;
 
 import com.bryanrady.versionadapter.v10.CompatV10Activity;
+import com.bryanrady.versionadapter.v11.CompatV11Activity;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -46,7 +47,8 @@ public class MainActivity extends AppCompatActivity {
         btn_compat_v11.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                Intent intent = new Intent(MainActivity.this, CompatV11Activity.class);
+                startActivity(intent);
             }
         });
 
