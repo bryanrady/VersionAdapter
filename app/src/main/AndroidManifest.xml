@@ -26,7 +26,9 @@
         </activity>
 
         <activity android:name=".v10.CompatV10Activity" />
-        <activity android:name=".v10.AlbumRecyclerActivity" />
+        <activity android:name=".v10.scope.ScopeStorageActivity" />
+        <activity android:name=".v10.scope.AlbumRecyclerActivity" />
+        <activity android:name=".v10.saf.SafActivity" />
 
         <activity android:name=".v11.CompatV11Activity" />
 

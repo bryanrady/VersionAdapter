@@ -12,11 +12,11 @@ import android.view.View;
 import android.widget.Button;
 
 import com.bryanrady.versionadapter.v10.CompatV10Activity;
+import com.bryanrady.versionadapter.v10.scope.ScopeStorageActivity;
 import com.bryanrady.versionadapter.v11.CompatV11Activity;
 
 public class MainActivity extends AppCompatActivity {
 
-    private String mFilePath;
     private Button btn_compat_v7;
     private Button btn_compat_v10;
     private Button btn_compat_v11;

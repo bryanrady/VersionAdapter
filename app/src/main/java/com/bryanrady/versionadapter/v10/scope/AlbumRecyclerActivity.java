@@ -1,4 +1,4 @@
-package com.bryanrady.versionadapter.v10;
+package com.bryanrady.versionadapter.v10.scope;
 
 import android.content.ContentUris;
 import android.database.Cursor;
