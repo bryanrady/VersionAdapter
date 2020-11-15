@@ -44,6 +44,8 @@ public class SafActivity extends AppCompatActivity {
     private static final int REQUEST_CHOOSE_FILE = 101;
     private static final int REQUEST_CREATE_FILE = 102;
 
+    private Uri mOperateUri;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -72,36 +74,41 @@ public class SafActivity extends AppCompatActivity {
         btn_delete_file.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Uri uri = Uri.parse("content://com.android.providers.downloads.documents/document/89");
-                deleteFile(uri);
+                if (mOperateUri != null){
+                    deleteFile(mOperateUri);
+                }
             }
         });
         btn_modify_file1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Uri uri = null;
-                modifyFile(uri);
+                if (mOperateUri != null){
+                    modifyFile(mOperateUri);
+                }
             }
         });
         btn_modify_file2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Uri uri = null;
-                modifyFile2(uri);
+                if (mOperateUri != null){
+                    modifyFile2(mOperateUri);
+                }
             }
         });
         btn_read_file1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Uri uri = null;
-                readTextFromUri(uri);
+                if (mOperateUri != null){
+                    readTextFromUri(mOperateUri);
+                }
             }
         });
         btn_read_file2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Uri uri = null;
-                readBitmapFromUri(uri);
+                if (mOperateUri != null){
+                    readBitmapFromUri(mOperateUri);
+                }
             }
         });
     }
@@ -239,6 +246,8 @@ public class SafActivity extends AppCompatActivity {
                     if (data != null){
                         Uri uri = data.getData();
                         Log.d("wangqingbin","uri == " + uri);
+
+                        mOperateUri= uri;
                     }
                     break;
                 case REQUEST_CREATE_FILE:
