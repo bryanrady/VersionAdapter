@@ -1,9 +1,35 @@
 package com.bryanrady.versionadapter.util;
 
+import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Rect;
+import android.net.Uri;
+import android.os.ParcelFileDescriptor;
+
+import java.io.FileNotFoundException;
 
 public class BitmapUtil {
+
+    public static Bitmap decodeSampledBitmapFromFilePath(Context context, Uri imageUri, int reqWidth, int reqHeight) {
+        // 第一次解析将inJustDecodeBounds设置为true，来获取图片大小
+        final BitmapFactory.Options options = new BitmapFactory.Options();
+        options.inJustDecodeBounds = true;
+
+        ParcelFileDescriptor pfd = null;
+        try {
+            pfd = context.getContentResolver().openFileDescriptor(imageUri, "r");
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        BitmapFactory.decodeFileDescriptor(pfd.getFileDescriptor(), null, options);
+
+        // 调用上面定义的方法计算inSampleSize值
+        options.inSampleSize = calculateInSampleSize(options, reqWidth, reqHeight);
+        // 使用获取到的inSampleSize值再次解析图片
+        options.inJustDecodeBounds = false;
+        return BitmapFactory.decodeFileDescriptor(pfd.getFileDescriptor(), null, options);
+    }
 
     public static Bitmap decodeSampledBitmapFromFilePath(String imagePath, int reqWidth, int reqHeight) {
         // 第一次解析将inJustDecodeBounds设置为true，来获取图片大小

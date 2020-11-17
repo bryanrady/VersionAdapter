@@ -27,6 +27,8 @@ import androidx.core.content.FileProvider;
 
 import com.bryanrady.versionadapter.BuildConfig;
 import com.bryanrady.versionadapter.R;
+import com.bryanrady.versionadapter.util.BitmapUtil;
+import com.bryanrady.versionadapter.util.UriToPathUtil;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
@@ -188,9 +190,17 @@ public class ScopeStorageActivity extends AppCompatActivity {
                 case REQUEST_OPEN_CAMERA:
                     //data为null 表示是相机返回
                     Log.d("wangqingbin","mImageUri=="+mImageUri);
-                    //    iv.setImageURI(mImageUri);
+//                    iv.setImageURI(mImageUri);
 
-                    Bitmap bitmap = imageUriToBitmap(mImageUri);
+                    Uri.Builder buildUpon = mImageUri.buildUpon();
+                    buildUpon.appendQueryParameter("photoSource","11111");
+                    mImageUri = buildUpon.build();
+
+                    Log.d("wangqingbin","mImageUri 22=="+mImageUri);
+
+
+                //    Bitmap bitmap = imageUriToBitmap(mImageUri);
+                    Bitmap bitmap = BitmapUtil.decodeSampledBitmapFromFilePath(this, mImageUri, 200, 200);
                     iv.setImageBitmap(bitmap);
                     break;
                 case REQUEST_OPEN_ALBUM:
